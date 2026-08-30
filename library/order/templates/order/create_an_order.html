@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block title %}New Order{% endblock %}
+{% block content %}
+
+<div class="container">
+    <form class="card" id="createAnOrderForm" method="POST" action="{% url 'create_an_order' %}">
+        <div class="d-flex justify-content-center">
+            <h3>Create an Order</h3>
+        </div>
+        <div class="form-group m-5 mt-2 mb-2">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="{{ form.book.id_for_label }}" class="form-label fw-bold d-block">
+                    {{ form.book.label }}
+                </label>
+
+                {{ form.book }}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.copies.id_for_label }}">Copies</label>
+                {{ form.copies }}
+            </div>
+
+            {% if form.non_field_errors %}
+            <div class="alert alert-danger mt-2">
+                {% for error in form.non_field_errors %}
+                <span class="error-message text-danger d-block">{{ error }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">Create an Order</button>
+    </form>
+</div>
+
+<!-- <div class="my-4">
+    <h1>Create an Order</h1>
+
+    {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+
+    <form method="post" action="{% url 'create_an_order' %}" class="col-md-6">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label class="form-label">Book</label>
+            <select name="book" class="form-select" required>
+                {% for b in books %}
+                    <option value="{{ b.id }}" {% if request.GET.book == b.id|stringformat:"s" %}selected{% endif %}>
+                        {{ b.name }} ({{ b.count }} available)
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Create Order</button>
+        <a href="{% url 'list_of_orders' %}" class="btn btn-outline-secondary">Cancel</a>
+    </form>
+</div> -->
+{% endblock %}

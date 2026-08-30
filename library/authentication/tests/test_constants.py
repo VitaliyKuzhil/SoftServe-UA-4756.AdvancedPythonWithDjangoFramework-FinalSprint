@@ -1,0 +1,9 @@
+
+VALID_USER_EMAIL = 'reader@gmail.com'
+VALID_USER_PASSWORD = 'StroNg@17pass'
+VALID_USER_INVALID_PASSWORD = VALID_USER_PASSWORD.capitalize()
+
+INVALID_USER_EMAIL = 'invalid@gmail.com'
+INVALID_USER_PASSWORD = 'Pass#Word'
+
+TIME_TO_WAIT = 10

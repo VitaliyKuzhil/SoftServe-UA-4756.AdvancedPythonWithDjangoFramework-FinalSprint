@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}Update a book{% endblock %}
+{% block content %}
+
+<div class="container">
+    <form class="card" id="updateABookForm" method="POST" action="{% url 'book:update_a_book' book.id %}">
+        <div class="d-flex justify-content-center">
+            <h3>Update a Book</h3>
+        </div>
+        <div class="form-group m-5 mt-2 mb-2">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="{{ form.name.id_for_label }}">Name</label>
+                {{ form.name }}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.description.id_for_label }}">Description</label>
+                {{ form.description }}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.count.id_for_label }}">Count</label>
+                {{ form.count }}
+            </div>
+            
+            <div class="form-group mb-4 mt-4">
+                <label class="form-label fw-bold d-block">{{ form.authors.label }}</label>
+                
+                <div class="p-3 border rounded bg-light" style="max-height: 100px; overflow-y: auto;">
+                    {% for checkbox in form.authors %}
+                        <div class="form-check mb-2 d-flex align-items-center">
+                            {{ checkbox.tag }} 
+                            <label class="form-check-label ms-2 cursor-pointer" for="{{ checkbox.id_for_label }}">
+                                {{ checkbox.choice_label }}
+                            </label>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Update a Book</button>
+    </form>
+</div>
+{% endblock %}

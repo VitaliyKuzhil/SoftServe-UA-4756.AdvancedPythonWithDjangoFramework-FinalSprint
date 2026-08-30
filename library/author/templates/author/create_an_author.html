@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block title %}Add Author{% endblock %}
+{% block content %}
+
+<div class="container">
+        <form class="card" id="createAnAuthorForm" method="POST" action="{% url 'author:create_an_author' %}">
+            <div class="d-flex justify-content-center">
+                <h3>Create an Author</h3>
+            </div>
+            <div class="form-group m-5 mt-2 mb-2">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="{{ form.name.id_for_label }}">Name</label>
+                    {{ form.name }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.surname.id_for_label }}">Surname</label>
+                    {{ form.surname }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.patronymic.id_for_label }}">Patronymic</label>
+                    {{ form.patronymic }}
+                </div>
+
+                {% if form.non_field_errors %}
+                <div class="alert alert-danger mt-2">
+                    {% for error in form.non_field_errors %}
+                    <span class="error-message text-danger d-block">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Create an Author</button>
+        </form>
+    </div>
+
+<!--<div class="my-4">
+    <h1>Add a New Author</h1>
+    <form method="post" action="{% url 'author:create_an_author' %}" class="col-md-6">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label class="form-label">Name</label>
+            <input type="text" name="name" class="form-control" maxlength="20" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Surname</label>
+            <input type="text" name="surname" class="form-control" maxlength="20" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Patronymic</label>
+            <input type="text" name="patronymic" class="form-control" maxlength="20">
+        </div>
+        <button type="submit" class="btn btn-primary">Create</button>
+        <a href="{% url 'author:list_of_authors' %}" class="btn btn-outline-secondary">Cancel</a>
+    </form>
+</div>-->
+{% endblock %}
