@@ -1,0 +1,46 @@
+version: "3.8"
+
+services:
+  app:
+    build: .
+    image: library:1.0
+    container_name: library_service
+    volumes:
+      - .:/app:rw
+    restart: 'always'
+    env_file:
+      - ./.env
+    ports:
+      - "${DJANGO_LISTEN_PORT}:${DJANGO_LISTEN_PORT}"
+    command: python library/manage.py runserver 0.0.0.0:${DJANGO_LISTEN_PORT}
+    depends_on:
+      - database
+
+  database:
+    image: postgres:16.1-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    container_name: database_service
+    restart: 'always'
+    env_file:
+      - ./.env
+    ports:
+      - "${POSTGRES_PORT}:${POSTGRES_PORT}"
+
+  pgadmin:
+    image: dpage/pgadmin4:8.0
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    container_name: pgadmin_service
+    restart: 'always'
+    env_file:
+      - ./.env
+    ports:
+      - "${PGADMIN_LISTEN_PORT}:${PGADMIN_LISTEN_PORT}"
+    depends_on:
+      - database
+      - app
+
+volumes:
+  postgres_data:
+  pgadmin_data:
